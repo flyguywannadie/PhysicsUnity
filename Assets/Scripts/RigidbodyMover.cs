@@ -9,6 +9,7 @@ public class RigidbodyMover : MonoBehaviour
     [SerializeField] ForceMode mode;
     [SerializeField] Vector3 torque;
     [SerializeField] ForceMode torqueMode;
+    [SerializeField] KeyCode jumpKey;
 
     Rigidbody rb;
 
@@ -19,10 +20,18 @@ public class RigidbodyMover : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(jumpKey))
         {
-            rb.AddForce(force, mode);
-            rb.AddTorque(torque, torqueMode);
+            rb.AddForce(Vector3.up, mode);
         }
     }
+
+	private void FixedUpdate()
+	{
+		if (Input.GetKey(KeyCode.Space))
+		{
+			rb.AddForce(force, mode);
+			rb.AddTorque(torque, torqueMode);
+		}
+	}
 }
