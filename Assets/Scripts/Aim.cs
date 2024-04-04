@@ -35,7 +35,7 @@ public class Aim : MonoBehaviour
 		Quaternion qyaw = Quaternion.AngleAxis(rotation.y, Vector3.up);
 		Quaternion qpitch = Quaternion.AngleAxis(rotation.x, Vector3.right);
 
-		transform.rotation = (qyaw * qpitch);
+		transform.localRotation = (qyaw * qpitch);
 		
 	}
 

@@ -22,6 +22,16 @@ public class CarController : MonoBehaviour
 	[SerializeField] Axle[] axles;
 	[SerializeField] float maxMotorTorque;
 	[SerializeField] float maxSteeringAngle;
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			transform.position += Vector3.up;
+			transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
+		}
+	}
+
 	public void FixedUpdate()
 	{
 		float motor = Input.GetAxis("Vertical") * maxMotorTorque;
