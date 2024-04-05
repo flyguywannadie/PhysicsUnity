@@ -16,7 +16,8 @@ public class ShooterManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.Lerp( transform.position, Vector3.zero, 0.5f * Time.deltaTime);
+        Camera.main.transform.localPosition = Vector3.Lerp(Camera.main.transform.localPosition, Vector3.zero, 2 * Time.deltaTime);
+        Camera.main.transform.localRotation = Quaternion.Lerp(Camera.main.transform.localRotation, Quaternion.identity, 2 * Time.deltaTime);
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -41,6 +42,6 @@ public class ShooterManager : MonoBehaviour
 
     private void SwitchPoint()
     {
-        Camera.main.transform.SetParent(shootpoints[currentpoint], false);
+        Camera.main.transform.SetParent(shootpoints[currentpoint], true);
     }
 }
