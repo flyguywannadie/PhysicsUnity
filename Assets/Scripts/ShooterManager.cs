@@ -1,16 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShooterManager : MonoBehaviour
 {
+    public static ShooterManager SHOOTERMANAGER;
+
     [SerializeField] Transform[] shootpoints;
     [SerializeField] int currentpoint = 0;
+
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] int score = -1;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        SHOOTERMANAGER = this;
+        KillMovie();
     }
 
     // Update is called once per frame
@@ -43,5 +51,11 @@ public class ShooterManager : MonoBehaviour
     private void SwitchPoint()
     {
         Camera.main.transform.SetParent(shootpoints[currentpoint], true);
+    }
+
+    public void KillMovie()
+    {
+        score++;
+        scoreText.text = "Destruction: " + score;
     }
 }

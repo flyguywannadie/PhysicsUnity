@@ -30,7 +30,7 @@ public class Aim : MonoBehaviour
 		rotation.y += axis.y * mouseSens;
 
 		rotation.x = Mathf.Clamp(rotation.x, -40, 40);
-		rotation.y = Mathf.Clamp(rotation.y, -40, 40);
+		//rotation.y = Mathf.Clamp(rotation.y, -40, 40);
 
 		Quaternion qyaw = Quaternion.AngleAxis(rotation.y, Vector3.up);
 		Quaternion qpitch = Quaternion.AngleAxis(rotation.x, Vector3.right);

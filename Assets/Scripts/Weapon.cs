@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Weapon : MonoBehaviour
 {
@@ -11,33 +13,37 @@ public class Weapon : MonoBehaviour
         public GameObject prefab;
         public float fireRate;
 		public Sprite icon;
+		public float shootCooldown;
 	}
 
 	[SerializeField] WeaponAmmo[] ammoPrefab;
     [SerializeField] int ammoSelection;
     [SerializeField] Transform whereItSpawns;
     [SerializeField] AudioSource audioSource;
-
-	[SerializeField]
-
-    float shootCooldown = 0;
+	[SerializeField] Image ammoImg;
+	[SerializeField] TextMeshProUGUI weaponText;
 
 
     void Update()
     {
-        if (shootCooldown > 0)
-        {
-            shootCooldown -= Time.deltaTime;
-        } 
-        else if (Input.GetMouseButtonDown(0))
+		for (int i = 0; i < ammoPrefab.Length; i++)
+		{
+			if (ammoPrefab[i].shootCooldown > 0)
+			{
+				ammoPrefab[i].shootCooldown -= Time.deltaTime;
+			}
+		}
+
+		weaponText.text = ammoPrefab[ammoSelection].prefab.name + "\n" + ((ammoPrefab[ammoSelection].shootCooldown > 0) ? ammoPrefab[ammoSelection].shootCooldown.ToString("00") : "READY"); 
+
+		if (Input.GetMouseButtonDown(0) && ammoPrefab[ammoSelection].shootCooldown <= 0)
         {
             audioSource.Play();
             Instantiate(ammoPrefab[ammoSelection].prefab, whereItSpawns.position, whereItSpawns.rotation);
-            shootCooldown = ammoPrefab[ammoSelection].fireRate;
-
+			ammoPrefab[ammoSelection].shootCooldown = ammoPrefab[ammoSelection].fireRate;
 		}
 
-		if (Input.GetKeyDown(KeyCode.W))
+		if (Input.GetKeyDown(KeyCode.S))
 		{
 			ammoSelection--;
 			if (ammoSelection < 0)
@@ -47,7 +53,7 @@ public class Weapon : MonoBehaviour
 			SwapAmmo();
 		}
 
-		if (Input.GetKeyDown(KeyCode.S))
+		if (Input.GetKeyDown(KeyCode.W))
 		{
 			ammoSelection++;
 			if (ammoSelection >= ammoPrefab.Length)
@@ -60,6 +66,6 @@ public class Weapon : MonoBehaviour
 
 	private void SwapAmmo()
 	{
-
+		ammoImg.sprite = ammoPrefab[ammoSelection].icon;
 	}
 }
