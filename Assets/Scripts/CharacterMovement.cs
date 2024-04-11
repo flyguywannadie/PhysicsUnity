@@ -11,8 +11,10 @@ public class CharacterMovement : MonoBehaviour
 	[SerializeField] Transform view;
 
 	private CharacterController controller;
-	private Vector3 velocity;
+	[SerializeField]private Vector3 velocity;
 	private bool onGround;
+
+	[SerializeField] private Animator anims;
 
 	private void Start()
 	{
@@ -21,6 +23,8 @@ public class CharacterMovement : MonoBehaviour
 
 	void Update()
 	{
+		anims.SetFloat("VelocityY", velocity.y);
+
 		onGround = controller.isGrounded;
 		if (onGround && velocity.y < 0)
 		{
@@ -46,7 +50,16 @@ public class CharacterMovement : MonoBehaviour
 		}
 
 		velocity.y += Physics.gravity.y * Time.deltaTime;
-		controller.Move(velocity * Time.deltaTime);//
+		controller.Move(velocity * Time.deltaTime);
+
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+			anims.SetBool("Equipped", !anims.GetBool("Equipped"));
+		}
+
+
+		anims.SetBool("OnGround", onGround);
+		anims.SetFloat("Speed", move.magnitude);
 	}
 
 	void OnControllerColliderHit(ControllerColliderHit hit)
