@@ -27,8 +27,11 @@ public class Block : MonoBehaviour
         {
             if (transform.position.y < 0.25 || Vector3.Distance(originalPosition, transform.position) > 1)
             {
-                destroyed = true;
-                ShooterManager.SHOOTERMANAGER.KillMovie();
+                if (ShooterManager.SHOOTERMANAGER)
+                {
+					destroyed = true;
+					ShooterManager.SHOOTERMANAGER.KillMovie();
+				}
             }
         }
 	}
